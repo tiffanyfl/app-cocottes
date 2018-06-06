@@ -29,8 +29,20 @@ ionic cordova prepare
 
 ## Use ionic
 
-1. Launch server
+1. Add devices (do it once)
 
 ```
-ionic serve
+ionic cordova platform add android
+ionic cordova platform add ios
+ionic build android
+ionic build ios
+ionic run android
+ionic run ios
 ```
+
+2. Launch server
+
+```
+ionic serve --lab
+```
+
