@@ -24,6 +24,9 @@ export class HomePage {
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
 
+    bluetoothSerial.enable();
+    
+
     this.items = [];
     for(let i = 1; i < 8; i++) {
       this.items.push({
@@ -32,7 +35,6 @@ export class HomePage {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
-    bluetoothSerial.enable();
   }
 
   itemTapped(event, item) {
