@@ -1,0 +1,41 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title class="title">Chicken Robot</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary" floating>Email</ion-label>
+        <ion-input type="text" #email></ion-input>
+      <!-- <ion-input type="text" #email value="" [(ngModel)]="userData.email"></ion-input> -->
+      <!-- <ion-input type="text" name="email" [(ngModel)]="usercreds.email"></ion-input> -->
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" floating>Mot de passe</ion-label>
+      <ion-input type="password" #passwordConf></ion-input>
+      <!-- <ion-input type="password" #password [(ngModel)]="userData.password"></ion-input> -->
+      <!-- <ion-input type="password" name="passwordConf" [(ngModel)]="usercreds.passwordConf"></ion-input> -->
+    </ion-item>
+
+  </ion-list>
+
+  <div padding>
+    <!-- <button ion-button full color="lightText" (click)="login(usercreds)">Se connecter</button> -->
+    <button ion-button full color="lightText" (click)="login()">Se connecter</button>
+    <!-- <button ion-button (click)="login(usercreds)">Login</button> -->
+  </div>
+
+</ion-content>

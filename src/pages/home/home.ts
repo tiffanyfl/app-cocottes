@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, App } from 'ionic-angular';
 
 import { MarionnettePage } from '../marionnette/marionnette';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { AlertController } from 'ionic-angular';
+
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 @Component({
   selector: 'page-home',
@@ -20,12 +22,23 @@ export class HomePage {
   pairedDevices: any;
   gettingDevices: Boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private bluetoothSerial: BluetoothSerial, private alertCtrl: AlertController) {
+  //auth
+  // userDetails : any;
+  // responseData: any;
+  // userPostData = {"user_id":"","token":""};
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private bluetoothSerial: BluetoothSerial,
+    private alertCtrl: AlertController,
+    public authServiceProvider:AuthServiceProvider,
+    public app: App
+  ) {
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
 
     bluetoothSerial.enable();
-    
 
     this.items = [];
     for(let i = 1; i < 8; i++) {
@@ -35,6 +48,14 @@ export class HomePage {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
+
+    //auth
+    // const data = JSON.parse(localStorage.getItem('userData'));
+    // this.userDetails = data.userData;
+    //
+    // this.userPostData.user_id = this.userDetails.user_id;
+    // this.userPostData.token = this.userDetails.token;
+
   }
 
   itemTapped(event, item) {
@@ -114,6 +135,17 @@ export class HomePage {
       ]
     });
     alert.present();
-}
+  }
+
+  //disconnect
+  backToWelcome(){
+     const root = this.app.getRootNav();
+     root.popToRoot();
+  }
+
+  logout(){
+    localStorage.clear();
+    setTimeout(() => this.backToWelcome(), 1000);
+  }
 
 }
