@@ -137,6 +137,19 @@ export class HomePage {
     alert.present();
   }
 
+  startRunning() {
+    this.bluetoothSerial.write(1) // Start the measurement
+    .then((data: any) => {
+      this.bluetoothSerial.available()
+      .then((number: any) => {
+          this.bluetoothSerial.read()
+          })
+    })
+    .catch((e) => {
+    alert(e); // Error alert
+    });
+  }
+
   //disconnect
   backToWelcome(){
      const root = this.app.getRootNav();
