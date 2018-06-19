@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, App } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { MarionnettePage } from '../marionnette/marionnette';
+import { LoginPage } from '../login/login';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { AlertController } from 'ionic-angular';
@@ -22,18 +23,12 @@ export class HomePage {
   pairedDevices: any;
   gettingDevices: Boolean;
 
-  //auth
-  // userDetails : any;
-  // responseData: any;
-  // userPostData = {"user_id":"","token":""};
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private bluetoothSerial: BluetoothSerial,
     private alertCtrl: AlertController,
-    public authServiceProvider:AuthServiceProvider,
-    public app: App
+    public authServiceProvider:AuthServiceProvider
   ) {
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
@@ -48,13 +43,6 @@ export class HomePage {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
-
-    //auth
-    // const data = JSON.parse(localStorage.getItem('userData'));
-    // this.userDetails = data.userData;
-    //
-    // this.userPostData.user_id = this.userDetails.user_id;
-    // this.userPostData.token = this.userDetails.token;
 
   }
 
@@ -150,15 +138,10 @@ export class HomePage {
     });
   }
 
-  //disconnect
-  backToWelcome(){
-     const root = this.app.getRootNav();
-     root.popToRoot();
-  }
+  logout() {
+   this.authServiceProvider.logout();
+   this.navCtrl.setRoot(LoginPage);
+ }
 
-  logout(){
-    localStorage.clear();
-    setTimeout(() => this.backToWelcome(), 1000);
-  }
 
 }
