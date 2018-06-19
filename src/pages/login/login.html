@@ -18,17 +18,19 @@
   <ion-list>
 
     <ion-item>
-      <ion-label floating>Email</ion-label>
-      <ion-input [(ngModel)]="usercreds.email" type="text"></ion-input>
+      <ion-label color="primary" floating>Email</ion-label>
+      <ion-input type="text" [(ngModel)]="usercreds.email"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Mot de passe</ion-label>
-      <ion-input [(ngModel)]="usercreds.password" type="password"></ion-input>
+      <ion-label color="primary" floating>Mot de passe</ion-label>
+      <ion-input type="password" [(ngModel)]="usercreds.password"></ion-input>
     </ion-item>
 
   </ion-list>
 
-  <button (click)="login(usercreds)">Login</button>
+  <div padding>
+    <button ion-button full color="lightText" (click)="login(usercreds)">Se connecter</button>
+  </div>
 
 </ion-content>

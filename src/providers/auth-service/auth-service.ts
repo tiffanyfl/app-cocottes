@@ -13,30 +13,25 @@ export class AuthServiceProvider {
 
   isLoggedin = false;
 
-  constructor(public http: HttpClient) {
-  }
+  constructor(public http: HttpClient) {}
 
-  login(user) {
-
-    return new Promise(resolve => {
-
+    login(user) {
+      return new Promise(resolve => {
+        console.log(user);
         let headers = new HttpHeaders();
-        let creds = "email=" + user.email + "&password=" + user.password;
+        let creds = {'email': user.email, 'password': user.password};
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-        this.http.post("http://localhost:3000/login",creds, {headers: headers}).subscribe(data => {
+         this.http.post("http://localhost:3000/login", creds, {headers: headers}).subscribe(data => {
+             if(data){
+               window.localStorage.setItem('chicken', data.toString());
+               this.isLoggedin = true;
+             }
+             resolve(this.isLoggedin);
+         });
+       });
 
-            if(data){
-              window.localStorage.setItem('raja', data.toString());
-              this.isLoggedin = true;
-            }
-            resolve(this.isLoggedin);
-
-        });
-
-        });
-
-    }
+   }
 
     logout() {
       this.isLoggedin = false;
