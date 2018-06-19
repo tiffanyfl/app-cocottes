@@ -15,23 +15,20 @@
 
 <ion-content padding>
 
-   <ion-list>
+  <ion-list>
+
     <ion-item>
-      <ion-label color="primary" floating>Name</ion-label>
-        <!-- <ion-input type="text" #email></ion-input> -->
-      <ion-input type="text" [(ngModel)]="userData.name"></ion-input>
+      <ion-label floating>Email</ion-label>
+      <ion-input [(ngModel)]="usercreds.email" type="text"></ion-input>
     </ion-item>
 
-    <!-- <ion-item>
-      <ion-label color="primary" floating>Mot de passe</ion-label> -->
-      <!-- <ion-input type="password" #passwordConf></ion-input> -->
-      <!-- <ion-input type="password" [(ngModel)]="userData.passwordConf"></ion-input>
-    </ion-item> -->
+    <ion-item>
+      <ion-label floating>Mot de passe</ion-label>
+      <ion-input [(ngModel)]="usercreds.password" type="password"></ion-input>
+    </ion-item>
 
   </ion-list>
 
-  <div padding>
-    <button ion-button full color="lightText" (click)="login()">Se connecter</button>
-  </div>
+  <button (click)="login(usercreds)">Login</button>
 
 </ion-content>

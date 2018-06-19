@@ -22,11 +22,6 @@ export class HomePage {
   pairedDevices: any;
   gettingDevices: Boolean;
 
-  //auth
-  // userDetails : any;
-  // responseData: any;
-  // userPostData = {"user_id":"","token":""};
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -48,13 +43,6 @@ export class HomePage {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
-
-    //auth
-    // const data = JSON.parse(localStorage.getItem('userData'));
-    // this.userDetails = data.userData;
-    //
-    // this.userPostData.user_id = this.userDetails.user_id;
-    // this.userPostData.token = this.userDetails.token;
 
   }
 
@@ -137,15 +125,8 @@ export class HomePage {
     alert.present();
   }
 
-  //disconnect
-  backToWelcome(){
-     const root = this.app.getRootNav();
-     root.popToRoot();
-  }
-
   logout(){
-    localStorage.clear();
-    setTimeout(() => this.backToWelcome(), 1000);
+    //something
   }
 
 }

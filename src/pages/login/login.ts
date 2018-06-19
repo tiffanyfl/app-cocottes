@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-//import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
-import 'rxjs/add/operator/toPromise';
-//import { TabsPage } from '../tabs/tabs';
+import { IonicPage, NavController } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 /**
@@ -20,65 +18,28 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class LoginPage {
 
-  //get info of user
-  // @ViewChild('email') email;
-  // @ViewChild('passwordConf') passwordConf;
-
-  //auth
-  responseData: any;
-  //userData= {"email":"","passwordConf":""};
-  userData={'name':''};
+    usercreds = {
+        email: '',
+        password: ''
+    }
 
 
   constructor(
     public navCtrl: NavController,
-    public authServiceProvider: AuthServiceProvider,
-    public alertCtrl: AlertController,
+    public authServiceProvider: AuthServiceProvider
   ) {
-}
+  }
 
   // ionViewDidLoad() {
   //   console.log('ionViewDidLoad LoginPage');
   // }
 
-  login(){
-    this.authServiceProvider.postData(this.userData.name).subscribe((result) =>{
-      console.log(this.userData.name);
+  login(usercreds) {
+    this.authServiceProvider.login(this.usercreds).then(data => {
+      if(data){
+        this.navCtrl.setRoot(TabsPage);
+      }
     });
-
-  //without API
-  // if(this.email.value=="test@test.com" && this.passwordConf.value =="test"){
-  //   let alert = this.alertCtrl.create({
-  //     title: 'Connexion réussie !',
-  //     subTitle: 'Tu es connecté',
-  //     buttons: ['OK']
-  //   });
-  //   alert.present();
-  //   console.log(this.email.value, this.passwordConf.value);
-  //   this.navCtrl.push(TabsPage, {}, {animate: false});
-  // }else{
-  //   let alert = this.alertCtrl.create({
-  //     title: 'Connexion échouée !',
-  //     subTitle: 'Les informations sont incorrectes',
-  //     buttons: ['OK']
-  //   });
-  //   alert.present();
-  // }
-
-  //this.authServiceProvider.postData(this.userData,"login").then((result) => {
-  // this.authServiceProvider.postData(this.userData.email, this.userData.passwordConf).subscribe((result) => {
-  //   this.responseData = result;
-  //   console.log(this.responseData);
-  //   if(this.responseData.userData.email && this.responseData.userData.passwordConf){
-  //     //localStorage.setItem('userData', JSON.stringify(this.responseData));
-  //     this.navCtrl.push(TabsPage);
-  //   }
-  //   else{ console.log("User already exists"); }
-  // }, err => {
-  //   console.log(err);
-  // });
-
-
- }
+  }
 
 }
