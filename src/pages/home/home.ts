@@ -23,6 +23,9 @@ export class HomePage {
   pairedDevices: any;
   gettingDevices: Boolean;
 
+  choreData: any;
+  choreNames: string[];
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -31,6 +34,8 @@ export class HomePage {
     public authServiceProvider: AuthServiceProvider,
     public app: App
   ) {
+
+    this.getChoregraphies();
 
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
@@ -131,6 +136,18 @@ export class HomePage {
     let nav = this.app.getRootNav();
     this.authServiceProvider.logout();
     nav.setRoot(LoginPage);
+ }
+
+ getChoregraphies(){
+   this.authServiceProvider.getChoregraphies().then(data => {
+     this.choreData = data;
+     if(data) {
+       for(let i = 0; i < this.choreData.length; i++){
+         this.choreNames = data[i];
+         console.log(data[i].name);
+       }
+     }
+   });
  }
 
 }

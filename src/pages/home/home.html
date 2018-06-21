@@ -13,6 +13,12 @@
 
 <ion-content padding>
   <h2>Liste des marionnettes</h2>
+  <!-- <button (click)="getChoregraphies()">Choregraphies</button> -->
+  <div *ngFor="let choreName of choreNames">
+  <ion-item>
+      {{ choreName.name }}
+   </ion-item>
+ </div>
 
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">

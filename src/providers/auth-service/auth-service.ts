@@ -13,9 +13,25 @@ export class AuthServiceProvider {
 
   isLoggedin = false;
   apiURL = 'http://localhost:3000';
-  authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjJhNDM3ODJiMmI4ZjU3YjQ1NjVkZjUiLCJlbWFpbCI6InRlc3Q5QHRlc3QuY29tIiwiZXhwIjoxNTMwMTg4NzMyLCJpYXQiOjE1Mjk1ODM5MzJ9.w2dHxA8OhKaqZ5H0-e97ZYxDMVM6M0b7tr9o7HAtR8k';
+  authToken = null;
+  userDetails: any;
 
   constructor(public http: HttpClient) {}
+
+    storeUserData(token) {
+        window.localStorage.setItem('userData', token);
+        this.useData(token);
+    }
+
+    useData(token) {
+      this.isLoggedin = true;
+      this.authToken = token;
+    }
+
+    loadUserData() {
+      let token = window.localStorage.getItem('userData');
+      this.useData(token);
+    }
 
     //connect to the application
     login(user) {
@@ -25,11 +41,11 @@ export class AuthServiceProvider {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
          this.http.post(this.apiURL+'/login', creds, {headers: headers}).subscribe(data => {
-             if(data){
-               window.localStorage.setItem('userData', data.toString());
-               this.isLoggedin = true;
+           this.userDetails = data;
+             if(this.userDetails.success == true) {
+               this.storeUserData(this.userDetails.token);
+               resolve(true);
              }
-             resolve(this.isLoggedin);
          }, (err) => {
            reject(err);
          });
@@ -38,7 +54,25 @@ export class AuthServiceProvider {
 
   logout() {
     this.isLoggedin = false;
+    this.authToken = null;
     window.localStorage.clear();
+  }
+
+  getChoregraphies(){
+    return new Promise(resolve => {
+      let headers = new HttpHeaders();
+      this.loadUserData();
+      headers.append('Authorization', 'Bearer Token' +this.authToken);
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+      this.http.get(this.apiURL+'/choregraphies', {headers: headers}).subscribe(data => {
+          if(data) {
+            resolve(data);
+          }else{
+            resolve(false);
+          }
+      });
+  })
   }
 
 }
