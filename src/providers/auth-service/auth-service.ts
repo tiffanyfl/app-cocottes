@@ -15,9 +15,9 @@ export class AuthServiceProvider {
 
   constructor(public http: HttpClient) {}
 
+    //connect to the application
     login(user) {
-      return new Promise(resolve => {
-        console.log(user);
+      return new Promise((resolve,reject) => {
         let headers = new HttpHeaders();
         let creds = {'email': user.email, 'password': user.password};
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -28,9 +28,10 @@ export class AuthServiceProvider {
                this.isLoggedin = true;
              }
              resolve(this.isLoggedin);
+         }, (err) => {
+           reject(err);
          });
        });
-
    }
 
     logout() {

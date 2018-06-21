@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, App } from 'ionic-angular';
 
 import { MarionnettePage } from '../marionnette/marionnette';
 import { LoginPage } from '../login/login';
@@ -28,7 +28,8 @@ export class HomePage {
     public navParams: NavParams,
     private bluetoothSerial: BluetoothSerial,
     private alertCtrl: AlertController,
-    public authServiceProvider:AuthServiceProvider
+    public authServiceProvider: AuthServiceProvider,
+    public app: App
   ) {
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
@@ -126,8 +127,9 @@ export class HomePage {
   }
 
   logout() {
-   this.authServiceProvider.logout();
-   this.navCtrl.setRoot(LoginPage);
+    let nav = this.app.getRootNav();
+    this.authServiceProvider.logout();
+    nav.setRoot(LoginPage);
  }
 
 }
