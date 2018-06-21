@@ -31,6 +31,7 @@ export class HomePage {
     public authServiceProvider: AuthServiceProvider,
     public app: App
   ) {
+
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
 
