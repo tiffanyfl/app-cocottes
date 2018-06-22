@@ -24,7 +24,6 @@ export class HomePage {
   gettingDevices: Boolean;
 
   choreData: any;
-  choreNames: string[];
 
   constructor(
     public navCtrl: NavController,
@@ -35,21 +34,24 @@ export class HomePage {
     public app: App
   ) {
 
-    this.getChoregraphies();
-
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
 
     bluetoothSerial.enable();
 
     this.items = [];
-    for(let i = 1; i < 8; i++) {
+    for(let i = 1; i < 4; i++) {
       this.items.push({
         title: 'Item ' + i,
         note: 'This is item #' + i,
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
+
+    //get Choregraphies
+    this.authServiceProvider.getChoregraphies().then(data => {
+      this.choreData = data;
+    });
 
   }
 
@@ -132,22 +134,21 @@ export class HomePage {
     alert.present();
   }
 
+  //logout
   logout() {
     let nav = this.app.getRootNav();
     this.authServiceProvider.logout();
     nav.setRoot(LoginPage);
  }
 
- getChoregraphies(){
-   this.authServiceProvider.getChoregraphies().then(data => {
-     this.choreData = data;
-     if(data) {
-       for(let i = 0; i < this.choreData.length; i++){
-         this.choreNames = data[i];
-         console.log(data[i].name);
-       }
-     }
+ //get info of choregraphies
+ getChoregraphies(data){
+   let alert = this.alertCtrl.create({
+     title: data.name,
+     subTitle: "Info",
+     buttons: ['OK']
    });
+   alert.present();
  }
 
 }
