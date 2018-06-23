@@ -23,8 +23,6 @@ export class HomePage {
   pairedDevices: any;
   gettingDevices: Boolean;
 
-  choreData: any;
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,11 +45,6 @@ export class HomePage {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
-
-    //get Choregraphies
-    this.authServiceProvider.getChoregraphies().then(data => {
-      this.choreData = data;
-    });
 
   }
 
@@ -139,16 +132,6 @@ export class HomePage {
     let nav = this.app.getRootNav();
     this.authServiceProvider.logout();
     nav.setRoot(LoginPage);
- }
-
- //get info of choregraphies
- getChoregraphies(data){
-   let alert = this.alertCtrl.create({
-     title: data.name,
-     subTitle: "Info",
-     buttons: ['OK']
-   });
-   alert.present();
  }
 
 }

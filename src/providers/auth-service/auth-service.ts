@@ -58,21 +58,4 @@ export class AuthServiceProvider {
     window.localStorage.clear();
   }
 
-  getChoregraphies(){
-    return new Promise(resolve => {
-      let headers = new HttpHeaders();
-      this.loadUserData();
-      headers.append('Authorization', 'Bearer Token' +this.authToken);
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-      this.http.get(this.apiURL+'/choregraphies', {headers: headers}).subscribe(data => {
-          if(data) {
-            resolve(data);
-          }else{
-            resolve(false);
-          }
-      });
-  })
-  }
-
 }
