@@ -48,4 +48,12 @@
   </ion-item>
   <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>
   </ion-list>
+
+  <h2>BLE</h2>
+  <button ion-button (click)="scanDevices()">Scan</button>
+  <ion-list>
+    <button ion-item *ngfor="let device of devices">
+      {{device.name}}
+    </button>
+  </ion-list>
 </ion-content>

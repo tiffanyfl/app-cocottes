@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { MarionnettePage } from '../marionnette/marionnette';
@@ -6,6 +6,7 @@ import { LoginPage } from '../login/login';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { AlertController } from 'ionic-angular';
+import { BLE } from '@ionic-native/ble';
 
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
@@ -23,13 +24,21 @@ export class HomePage {
   pairedDevices: any;
   gettingDevices: Boolean;
 
+  //Ble
+  devices: any[] = [{name : "premierTest"}, {name : "secondTest"}];
+  serialDatas : any[] = [{data : "premierTest", out: false}, {data : "secondTest", out: true}]
+  status : string = "Non connecté";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private bluetoothSerial: BluetoothSerial,
     private alertCtrl: AlertController,
-    public authServiceProvider:AuthServiceProvider
+    public authServiceProvider:AuthServiceProvider,
+    private ble : BLE,
+    private ngZone : NgZone
   ) {
+
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
 
@@ -126,16 +135,36 @@ export class HomePage {
   }
 
   startRunning() {
-    this.bluetoothSerial.write(1) // Start the measurement
+    this.bluetoothSerial.write('true') // Start the measurement
     .then((data: any) => {
       this.bluetoothSerial.available()
       .then((number: any) => {
           this.bluetoothSerial.read()
-          })
+          .then((data: any) => {
+            for (let i = 1; i < data.length; i++) {
+              alert(data);
+              this.bluetoothSerial.clear();
+            }
+          });
+      })
     })
     .catch((e) => {
     alert(e); // Error alert
     });
+  }
+
+  scanDevices() {
+    //this.devices = [];
+    this.ble.scan([], 5).subscribe(
+      device => {
+        this.ngZone.run(() => {
+          this.devices.push(device);
+        })
+      },
+      error => {
+        console.log("Erreur pendant le scan");
+      }
+    )
   }
 
   logout() {
