@@ -1,5 +1,7 @@
+
 import { Component, NgZone } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, App } from 'ionic-angular';
+
 
 import { MarionnettePage } from '../marionnette/marionnette';
 import { LoginPage } from '../login/login';
@@ -34,9 +36,12 @@ export class HomePage {
     public navParams: NavParams,
     private bluetoothSerial: BluetoothSerial,
     private alertCtrl: AlertController,
+
     public authServiceProvider:AuthServiceProvider,
     private ble : BLE,
-    private ngZone : NgZone
+    private ngZone : NgZone,
+    public authServiceProvider: AuthServiceProvider,
+    public app: App
   ) {
 
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
@@ -45,7 +50,7 @@ export class HomePage {
     bluetoothSerial.enable();
 
     this.items = [];
-    for(let i = 1; i < 8; i++) {
+    for(let i = 1; i < 4; i++) {
       this.items.push({
         title: 'Item ' + i,
         note: 'This is item #' + i,
@@ -134,6 +139,7 @@ export class HomePage {
     alert.present();
   }
 
+
   startRunning() {
     this.bluetoothSerial.write('true') // Start the measurement
     .then((data: any) => {
@@ -167,9 +173,13 @@ export class HomePage {
     )
   }
 
+=======
+  //logout
+
   logout() {
-   this.authServiceProvider.logout();
-   this.navCtrl.setRoot(LoginPage);
+    let nav = this.app.getRootNav();
+    this.authServiceProvider.logout();
+    nav.setRoot(LoginPage);
  }
 
 

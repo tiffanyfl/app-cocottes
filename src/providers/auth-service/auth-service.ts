@@ -12,30 +12,50 @@ import { Injectable } from '@angular/core';
 export class AuthServiceProvider {
 
   isLoggedin = false;
+  apiURL = 'http://localhost:3000';
+  authToken = null;
+  userDetails: any;
 
   constructor(public http: HttpClient) {}
 
+    storeUserData(token) {
+        window.localStorage.setItem('userData', token);
+        this.useData(token);
+    }
+
+    useData(token) {
+      this.isLoggedin = true;
+      this.authToken = token;
+    }
+
+    loadUserData() {
+      let token = window.localStorage.getItem('userData');
+      this.useData(token);
+    }
+
+    //connect to the application
     login(user) {
-      return new Promise(resolve => {
-        console.log(user);
+      return new Promise((resolve,reject) => {
         let headers = new HttpHeaders();
         let creds = {'email': user.email, 'password': user.password};
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-         this.http.post("http://localhost:3000/login", creds, {headers: headers}).subscribe(data => {
-             if(data){
-               window.localStorage.setItem('chicken', data.toString());
-               this.isLoggedin = true;
+         this.http.post(this.apiURL+'/login', creds, {headers: headers}).subscribe(data => {
+           this.userDetails = data;
+             if(this.userDetails.success == true) {
+               this.storeUserData(this.userDetails.token);
+               resolve(true);
              }
-             resolve(this.isLoggedin);
+         }, (err) => {
+           reject(err);
          });
        });
-
    }
 
-    logout() {
-      this.isLoggedin = false;
-      window.localStorage.clear();
-    }
+  logout() {
+    this.isLoggedin = false;
+    this.authToken = null;
+    window.localStorage.clear();
+  }
 
 }
