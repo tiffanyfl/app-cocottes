@@ -40,7 +40,6 @@ export class HomePage {
     public authServiceProvider:AuthServiceProvider,
     private ble : BLE,
     private ngZone : NgZone,
-    public authServiceProvider: AuthServiceProvider,
     public app: App
   ) {
 
@@ -173,7 +172,6 @@ export class HomePage {
     )
   }
 
-=======
   //logout
 
   logout() {
