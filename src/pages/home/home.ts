@@ -59,12 +59,20 @@ export class HomePage {
 
   }
 
+  // Pour la liste des appareils connectés (tout en haut de l'appli)
   itemTapped(event, item) {
+    this.bluetoothSerial.list().then((success) => {
+      this.pairedDevices = success;
+    },
+      (err) => {
+
+      });
     this.navCtrl.push(MarionnettePage, {
       item: item
     });
   }
 
+  // Pour scanner les appareils connectés en Bluetooth
   startScanning() {
     this.pairedDevices = null;
     this.unpairedDevices = null;
@@ -115,6 +123,7 @@ export class HomePage {
 
   }
 
+  // Se déconnecter
   disconnect() {
     let alert = this.alertCtrl.create({
       title: 'Disconnect?',
@@ -138,26 +147,36 @@ export class HomePage {
     alert.present();
   }
 
-
+  // Pour envoyer le boléen à Arduino
   startRunning() {
-    this.bluetoothSerial.write('true') // Start the measurement
-    .then((data: any) => {
-      this.bluetoothSerial.available()
-      .then((number: any) => {
-          this.bluetoothSerial.read()
-          .then((data: any) => {
-            for (let i = 1; i < data.length; i++) {
-              alert(data);
-              this.bluetoothSerial.clear();
-            }
-          });
-      })
-    })
-    .catch((e) => {
-    alert(e); // Error alert
-    });
+    this.bluetoothSerial.write('on');
+    // this.bluetoothSerial.write('on').then((data: any) => {
+    //   this.bluetoothSerial.read.then((data : any) => {
+    //   console.log(data);
+    //   })
+    // }); // Start the measurement
+    // .then((data: any) => {
+    //   this.bluetoothSerial.available()
+    //   .then((number: any) => {
+    //       this.bluetoothSerial.read()
+    //       .then((data: any) => {
+    //         alert('test');
+    //
+    //         for (let i = 1; i < data.length; i++) {
+    //           alert('lala');
+    //
+    //           alert(data);
+    //           this.bluetoothSerial.clear();
+    //         }
+    //       });
+    //   })
+    // })
+    // .catch((e) => {
+    // alert(e); // Error alert
+    // });
   }
 
+  // Essai BLE (à supprimer)
   scanDevices() {
     //this.devices = [];
     this.ble.scan([], 5).subscribe(

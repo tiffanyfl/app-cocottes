@@ -15,12 +15,8 @@
   <h2>Liste des marionnettes</h2>
 
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon name="{{item.icon}}" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
-      </div>
+    <button ion-item *ngFor="let device of pairedDevices" (click)="itemTapped($event, device)">
+      {{device.name}} - {{device.class}} - {{device.id}}
     </button>
   </ion-list>
 
@@ -52,7 +48,7 @@
   <h2>BLE</h2>
   <button ion-button (click)="scanDevices()">Scan</button>
   <ion-list>
-    <button ion-item *ngfor="let device of devices">
+    <button ion-item *ngFor="let device of devices">
       {{device.name}}
     </button>
   </ion-list>

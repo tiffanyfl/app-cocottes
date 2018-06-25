@@ -5,11 +5,14 @@
 </ion-header>
 
 <ion-content padding>
-  <h2 *ngIf="selectedItem">{{selectedItem.title}}</h2>
+  <h2 *ngIf="selectedItem">{{selectedItem.name}}</h2>
   <p *ngIf="selectedItem">
-    You navigated here from <b>{{selectedItem.title}}</b>
+    You navigated here from <b>{{selectedItem.name}}</b>
   </p>
   <p text-center>
+    {{selectedItem.id}}
+    {{selectedItem.class}}
+    {{selectedItem.address}}
     <button ion-button outline>Téléverser</button>
   </p>
 </ion-content>
