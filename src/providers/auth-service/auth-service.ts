@@ -12,7 +12,8 @@ import { Injectable } from '@angular/core';
 export class AuthServiceProvider {
 
   isLoggedin = false;
-  apiURL = 'http://localhost:3000';
+  //apiURL = 'http://localhost:3000';
+  apiURL = 'http://10.40.74.17:3000';
   authToken = null;
   userDetails: any;
 
