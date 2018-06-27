@@ -23,7 +23,7 @@
   <button ion-button outline (click)="startScanning()">Connecter</button>
   <button ion-button outline>Ajouter</button>
   <button ion-button (click)="startRunning()">Lancer</button>
-  <button ion-button outline (click)="disconnect()">Déconnecté</button>
+  <button ion-button outline (click)="disconnect()">Déconnecter</button>
 
   <ion-list padding>
   <ion-list-header>
@@ -35,13 +35,5 @@
     </span>
   </ion-item>
   <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>
-  </ion-list>
-
-  <h2>BLE</h2>
-  <button ion-button (click)="scanDevices()">Scan</button>
-  <ion-list>
-    <button ion-item *ngFor="let device of devices">
-      {{device.name}}
-    </button>
   </ion-list>
 </ion-content>

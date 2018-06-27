@@ -1,5 +1,5 @@
 
-import { Component, NgZone } from '@angular/core';
+import { Component} from '@angular/core';
 import { NavController, NavParams, App } from 'ionic-angular';
 
 
@@ -8,7 +8,6 @@ import { LoginPage } from '../login/login';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { AlertController } from 'ionic-angular';
-import { BLE } from '@ionic-native/ble';
 
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
@@ -26,11 +25,6 @@ export class HomePage {
   pairedDevices: any;
   gettingDevices: Boolean;
 
-  //Ble
-  devices: any[] = [{name : "premierTest"}, {name : "secondTest"}];
-  serialDatas : any[] = [{data : "premierTest", out: false}, {data : "secondTest", out: true}]
-  status : string = "Non connecté";
-
   online: string = "online";
 
   constructor(
@@ -40,8 +34,6 @@ export class HomePage {
     private alertCtrl: AlertController,
 
     public authServiceProvider:AuthServiceProvider,
-    private ble : BLE,
-    private ngZone : NgZone,
     public app: App
   ) {
 
@@ -158,20 +150,6 @@ export class HomePage {
     });
   }
 
-  // Essai BLE (à supprimer)
-  scanDevices() {
-    //this.devices = [];
-    this.ble.scan([], 5).subscribe(
-      device => {
-        this.ngZone.run(() => {
-          this.devices.push(device);
-        })
-      },
-      error => {
-        console.log("Erreur pendant le scan");
-      }
-    )
-  }
 
   //logout
 
