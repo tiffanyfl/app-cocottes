@@ -31,6 +31,8 @@ export class HomePage {
   serialDatas : any[] = [{data : "premierTest", out: false}, {data : "secondTest", out: true}]
   status : string = "Non connecté";
 
+  online: string = "online";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -101,18 +103,18 @@ export class HomePage {
   selectDevice(address: any) {
 
     let alert = this.alertCtrl.create({
-      title: 'Connect',
-      message: 'Do you want to connect with?',
+      title: 'Connecter',
+      message: 'Voulez-vous vous connecter avec ?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Annuler',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            console.log('Annuler clické');
           }
         },
         {
-          text: 'Connect',
+          text: 'Connecter',
           handler: () => {
             this.bluetoothSerial.connect(address).subscribe(this.success, this.fail);
           }
@@ -126,18 +128,18 @@ export class HomePage {
   // Se déconnecter
   disconnect() {
     let alert = this.alertCtrl.create({
-      title: 'Disconnect?',
-      message: 'Do you want to Disconnect?',
+      title: 'Déconnecté ?',
+      message: 'Voulez-vous vous déconnecter ?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Annuler',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            console.log('Annuler cliqué');
           }
         },
         {
-          text: 'Disconnect',
+          text: 'Déconnecter',
           handler: () => {
             this.bluetoothSerial.disconnect();
           }
@@ -149,31 +151,11 @@ export class HomePage {
 
   // Pour envoyer le boléen à Arduino
   startRunning() {
-    this.bluetoothSerial.write('on');
-    // this.bluetoothSerial.write('on').then((data: any) => {
-    //   this.bluetoothSerial.read.then((data : any) => {
-    //   console.log(data);
-    //   })
-    // }); // Start the measurement
-    // .then((data: any) => {
-    //   this.bluetoothSerial.available()
-    //   .then((number: any) => {
-    //       this.bluetoothSerial.read()
-    //       .then((data: any) => {
-    //         alert('test');
-    //
-    //         for (let i = 1; i < data.length; i++) {
-    //           alert('lala');
-    //
-    //           alert(data);
-    //           this.bluetoothSerial.clear();
-    //         }
-    //       });
-    //   })
-    // })
-    // .catch((e) => {
-    // alert(e); // Error alert
-    // });
+    this.bluetoothSerial.write(this.online).then((success) => {
+      alert(success);
+    }, error => {
+      alert(error);
+    });
   }
 
   // Essai BLE (à supprimer)

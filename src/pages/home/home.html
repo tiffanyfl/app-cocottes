@@ -20,22 +20,14 @@
     </button>
   </ion-list>
 
-  <button ion-button outline>Connecter</button>
+  <button ion-button outline (click)="startScanning()">Connecter</button>
   <button ion-button outline>Ajouter</button>
-  <button ion-button>Lancer</button>
+  <button ion-button (click)="startRunning()">Lancer</button>
+  <button ion-button outline (click)="disconnect()">Déconnecté</button>
 
   <ion-list padding>
-    <button ion-button (click)="startRunning()">Run</button>
-  <button ion-button block (click)="startScanning()">scan</button>
   <ion-list-header>
-    Paired Devices
-  </ion-list-header>
-  <ion-item *ngFor="let device of pairedDevices">
-    {{device.name}}
-  </ion-item>
-  <button ion-button block (click)="disconnect()">Disconnect</button>
-  <ion-list-header>
-    availlable Devices
+    Appareils disponibles
   </ion-list-header>
   <ion-item *ngFor='let device of unpairedDevices'>
     <span (click)="selectDevice(device.address)">
