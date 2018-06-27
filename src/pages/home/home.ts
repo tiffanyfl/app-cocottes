@@ -23,9 +23,13 @@ export class HomePage {
   // Bluetooth variables
   unpairedDevices: any;
   pairedDevices: any;
+  pairedDevicesTable: [];
   gettingDevices: Boolean;
 
   online: string = "online";
+
+  success = (data) => alert(data);
+  fail = (error) => alert(error);
 
   constructor(
     public navCtrl: NavController,
@@ -82,15 +86,27 @@ export class HomePage {
         console.log(err);
       })
 
-    this.bluetoothSerial.list().then((success) => {
-      this.pairedDevices = success;
-    },
-      (err) => {
+      this.bluetoothSerial.list().then((success) => {
+        this.pairedDevices = success;
+        let name, classe, id;
+        this.pairedDevicesTable = [];
+        for(let i = 0; i < this.pairedDevices.length; i++){
+          name = this.pairedDevices[i].name;
+          classe = this.pairedDevices[i].class;
+          id = this.pairedDevices[i].id;
 
-      })
+          if(name.substring(0,6) == "Coucou"){
+            this.pairedDevicesTable.push({
+              name: name,
+              class: classe,
+              id: id
+            });
+          }
+        }
+    },(err) => {
+
+    })
   }
-  success = (data) => alert(data);
-  fail = (error) => alert(error);
 
   selectDevice(address: any) {
 
@@ -152,7 +168,6 @@ export class HomePage {
 
 
   //logout
-
   logout() {
     let nav = this.app.getRootNav();
     this.authServiceProvider.logout();

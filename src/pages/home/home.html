@@ -15,7 +15,7 @@
   <h2>Liste des marionnettes</h2>
 
   <ion-list>
-    <button ion-item *ngFor="let device of pairedDevices" (click)="itemTapped($event, device)">
+    <button ion-item *ngFor="let device of pairedDevicesTable" (click)="itemTapped($event, device)">
       {{device.name}} - {{device.class}} - {{device.id}}
     </button>
   </ion-list>
