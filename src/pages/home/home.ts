@@ -1,13 +1,12 @@
 
 import { Component } from '@angular/core';
-import { NavController, NavParams, App } from 'ionic-angular';
+import { NavController, NavParams, App, AlertController } from 'ionic-angular';
 
 import { MarionnettePage } from '../marionnette/marionnette';
 import { LoginPage } from '../login/login';
 import { RunPage } from '../run/run';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-import { AlertController } from 'ionic-angular';
 
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
@@ -24,7 +23,7 @@ export class HomePage {
   // Bluetooth variables
   unpairedDevices: any;
   pairedDevices: any;
-  pairedDevicesTable : any;
+  pairedDevicesTable = [];
   gettingDevices: Boolean;
 
   online: string = "online";
@@ -75,26 +74,35 @@ export class HomePage {
         console.log(err);
       })
 
-      this.bluetoothSerial.list().then((success) => {
-        this.pairedDevices = success;
-        let name, classe, id;
-        this.pairedDevicesTable = [];
-        for(let i = 0; i < this.pairedDevices.length; i++){
-          name = this.pairedDevices[i].name;
-          classe = this.pairedDevices[i].class;
-          id = this.pairedDevices[i].id;
+    this.bluetoothSerial.isEnabled().then((result:any) => {
+      this.bluetoothSerial.isConnected().then((result:any) => {
+        this.bluetoothSerial.list().then((success) => {
+          this.pairedDevices = success;
+          let name, classe, id;
+          this.pairedDevicesTable = [];
+          for(let i = 0; i < this.pairedDevices.length; i++){
+            name = this.pairedDevices[i].name;
+            classe = this.pairedDevices[i].class;
+            id = this.pairedDevices[i].id;
 
-          if(name.substring(0,6) == "Coucou" || name.substring(0,5) == "POULE" || name.substring(0,5) == "Poule" ){
-            this.pairedDevicesTable.push({
-              name: name,
-              class: classe,
-              id: id
-            });
+            if(name.substring(0,6) == "Coucou" || name.substring(0,5) == "POULE" || name.substring(0,5) == "Poule" ){
+              this.pairedDevicesTable.push({
+                name: name,
+                class: classe,
+                id: id
+              });
+            }
+
           }
-        }
+        },(err) => {
+          console.log(err);
+        })
     },(err) => {
-
+      console.log(err);
     })
+  },(err) => {
+    console.log(err);
+  })
   }
 
   selectDevice(address: any) {

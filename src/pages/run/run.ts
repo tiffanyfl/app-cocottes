@@ -1,11 +1,9 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-import { AlertController } from 'ionic-angular';
-import { BLE } from '@ionic-native/ble';
-
-import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+//import { AlertController } from 'ionic-angular';
+//import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 @Component({
   selector: 'page-run',
@@ -20,7 +18,8 @@ export class RunPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private bluetoothSerial: BluetoothSerial,
-    private alertCtrl: AlertController) {
+    //private alertCtrl: AlertController
+  ) {
 
       bluetoothSerial.enable();
   }
