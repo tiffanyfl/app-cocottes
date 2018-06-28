@@ -16,7 +16,7 @@
 
   <ion-list>
     <button ion-item *ngFor="let device of pairedDevicesTable" (click)="itemTapped($event, device)">
-      {{device.name}} - {{device.class}} - {{device.id}}
+      {{device.name}} - {{device.id}}
     </button>
   </ion-list>
 
@@ -24,6 +24,7 @@
   <button ion-button outline>Ajouter</button>
   <button ion-button (click)="startRunning()">Lancer</button>
   <button ion-button outline (click)="disconnect()">Déconnecter</button>
+  <button ion-button outline (click)="run()">Run</button>
 
   <ion-list padding>
   <ion-list-header>
@@ -36,4 +37,27 @@
   </ion-item>
   <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>
   </ion-list>
+
+
+
+  <ion-buttons>
+        <button ion-button outline (click)="scan()">
+          Scan
+        </button>
+      </ion-buttons>
+   <ion-list>
+    <button ion-item *ngFor="let device of devices" (click)="deviceSelected(device)">
+      <h2>{{ device.name }}</h2>
+      <p>{{ device.id }}</p>
+      <p>RSSI: {{ device.rssi }}</p>
+    </button>
+   </ion-list>
 </ion-content>
+
+
+
+<ion-footer>
+  <ion-toolbar>
+    <p>{{ statusMessage }}</p>
+  </ion-toolbar>
+</ion-footer>
