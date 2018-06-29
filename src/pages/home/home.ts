@@ -86,7 +86,7 @@ export class HomePage {
             classe = this.pairedDevices[i].class;
             id = this.pairedDevices[i].id;
 
-            if(name.substring(0,6) == "Coucou" || name.substring(0,5) == "POULE" || name.substring(0,5) == "Poule" || name.substring(0,14) == "little_chicken" ){
+            if(name.substring(0,14) == "little_chicken"){
               this.pairedDevicesTable.push({
                 name: name,
                 class: classe,
