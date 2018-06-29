@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
+// import { TabsPage } from '../tabs/tabs';
+import { HomePage } from '../home/home';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 /**
@@ -33,7 +34,7 @@ export class LoginPage {
   login(usercreds) {
     this.authServiceProvider.login(this.usercreds).then(data => {
       if(data){
-        this.navCtrl.setRoot(TabsPage);
+        this.navCtrl.setRoot(HomePage);
       }
     }, (err) => {
       let alert = this.alertCtrl.create({
