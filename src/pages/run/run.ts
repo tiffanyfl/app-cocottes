@@ -11,6 +11,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 })
 export class RunPage {
 
+  key_btn_0: string = "choregraphy_0";
   key_btn_1: string = "choregraphy_1";
   key_btn_2: string = "choregraphy_2";
 
@@ -22,6 +23,14 @@ export class RunPage {
   ) {
 
       bluetoothSerial.enable();
+  }
+
+  keyBtn0() {
+    this.bluetoothSerial.write(this.key_btn_0).then((success) => {
+      alert(success);
+    }, error => {
+      alert(error);
+    });
   }
 
   keyBtn1() {

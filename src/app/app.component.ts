@@ -6,14 +6,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 //import { TabsPage } from '../pages/tabs/tabs';
 import { HomePage } from '../pages/home/home';
 import { MarionnettePage } from '../pages/marionnette/marionnette';
-//import { LoginPage } from '../pages/login/login';
+import { LoginPage } from '../pages/login/login';
 import { RunPage } from '../pages/run/run';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage:any = LoginPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
