@@ -26,6 +26,8 @@ export class HomePage {
   pairedDevices: any;
   pairedDevicesTable = [];
   gettingDevices: Boolean;
+  connected  = [];
+  addressSelected : any;
 
   online: string = "online";
 
@@ -36,12 +38,46 @@ export class HomePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private bluetoothSerial: BluetoothSerial,
+    private bluetoothSerial2: BluetoothSerial,
     private alertCtrl: AlertController,
     public authServiceProvider:AuthServiceProvider,
     public app: App
   ) {
 
     bluetoothSerial.enable();
+    this.connected = [];
+
+
+    bluetoothSerial.list().then((success) => {
+      this.pairedDevices = success;
+      let name, classe, id, connected;
+      this.pairedDevicesTable = [];
+      for(let i = 0; i < this.pairedDevices.length; i++){
+        name = this.pairedDevices[i].name;
+        classe = this.pairedDevices[i].class;
+        id = this.pairedDevices[i].id;
+        this.connected.push({connectid : "not connected"});
+        connected = this.connected[i].connectid;
+
+        if(name.substring(0,14) == "little_chicken" || name.substring(0,11) == "Big_Chicken" || name.substring(0,10) == "BigChicken" ){
+
+          this.pairedDevicesTable.push({
+            name: name,
+            class: classe,
+            id: id,
+            connected: connected
+          });
+        }
+
+      }
+    },(err) => {
+      let alert = this.alertCtrl.create({
+        title: err,
+        buttons: ['OK']
+      });
+      alert.present();
+    })
+
   }
 
 
@@ -79,22 +115,29 @@ export class HomePage {
       this.bluetoothSerial.isConnected().then((result:any) => {
         this.bluetoothSerial.list().then((success) => {
           this.pairedDevices = success;
-          let name, classe, id;
+          let name, classe, id, connected;
           this.pairedDevicesTable = [];
           for(let i = 0; i < this.pairedDevices.length; i++){
             name = this.pairedDevices[i].name;
             classe = this.pairedDevices[i].class;
             id = this.pairedDevices[i].id;
+            if(this.pairedDevices[i].id == this.addressSelected){
+              this.connected[i].connectid = "connecté";
+            }
+            connected = this.connected[i].connectid;
 
-            if(name.substring(0,6) == "Coucou" || name.substring(0,5) == "POULE" || name.substring(0,5) == "Poule" || name.substring(0,14) == "little_chicken" ){
+            if(name.substring(0,14) == "little_chicken" || name.substring(0,11) == "Big_Chicken" || name.substring(0,10) == "BigChicken" ){
               this.pairedDevicesTable.push({
                 name: name,
                 class: classe,
-                id: id
+                id: id,
+                connected: connected
               });
             }
-
+            //alert(this.pairedDevicesTable.length);
+            //alert(this.connected[id].connectid);
           }
+
         },(err) => {
           console.log(err);
         })
@@ -107,40 +150,27 @@ export class HomePage {
   }
 
   selectDevice(address: any) {
-
+    this.addressSelected = address;
     let alert = this.alertCtrl.create({
-      title: 'Connecter',
-      message: 'Voulez-vous vous connecter avec ?',
+      title: 'Connect',
+      message: 'Do you want to connect ?',
       buttons: [
         {
-          text: 'Annuler',
+          text: 'Cancel',
           role: 'cancel',
           handler: () => {
-            console.log('Annuler clické');
+            //console.log('Annuler');
           }
         },
         {
-          text: 'Connecter',
+          text: 'Connect',
           handler: () => {
             this.bluetoothSerial.connect(address).subscribe(this.success, this.fail);
-            //this.bluetoothSerial.setMultiple(this.success, this.fail, 'BluetoothSerial2', 'list',[]);
-            cordova.exec(
-              function(devices) {
-                console.log('Device List:', JSON.stringify(devices));
-              },
-              function(error) {
-                console.log('ERROR', error);
-              },
-              'BluetoothSerial2',
-              'list',
-              []
-          );
         }
       }
       ]
     });
     alert.present();
-
   }
 
   run(){
@@ -150,18 +180,18 @@ export class HomePage {
   // Se déconnecter
   disconnect() {
     let alert = this.alertCtrl.create({
-      title: 'Déconnecté ?',
-      message: 'Voulez-vous vous déconnecter ?',
+      title: 'Disconnect ?',
+      message: 'Do you want to disconnect ?',
       buttons: [
         {
-          text: 'Annuler',
+          text: 'Cancel',
           role: 'cancel',
           handler: () => {
-            console.log('Annuler');
+            //console.log('Annuler');
           }
         },
         {
-          text: 'Déconnecter',
+          text: 'Disconnect',
           handler: () => {
             this.bluetoothSerial.disconnect();
           }
@@ -174,9 +204,18 @@ export class HomePage {
   // Pour envoyer le boléen à Arduino
   startRunning() {
     this.bluetoothSerial.write(this.online).then((success) => {
-      alert(success);
+      let alert = this.alertCtrl.create({
+        title: 'You are connected !',
+        buttons: ['OK']
+      });
+      alert.present();
     }, error => {
-      alert(error);
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please start again',
+        buttons: ['OK']
+      });
+      alert.present();
     });
   }
 
@@ -187,7 +226,5 @@ export class HomePage {
     this.authServiceProvider.logout();
     nav.setRoot(LoginPage);
  }
-
-
 
 }

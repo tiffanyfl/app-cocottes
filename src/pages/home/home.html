@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons start>
     </ion-buttons>
-    <ion-title>Accueil</ion-title>
+    <ion-title>Chicken robots list</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="logout()" class="icon-size">
         <ion-icon name="power"></ion-icon>
@@ -12,29 +12,41 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Liste des marionnettes</h2>
+  <!-- <button ion-button (click)="startRunning()">Lancer</button> -->
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button outline (click)="startScanning()">Connect</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button float-right outline (click)="disconnect()">Disconnect</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <button ion-button block (click)="run()">Run</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-list>
-    <button ion-item *ngFor="let device of pairedDevicesTable" (click)="itemTapped($event, device)">
-      {{device.name}} - {{device.id}}
-    </button>
-  </ion-list>
-
-  <button ion-button outline (click)="startScanning()">Connecter</button>
-  <!-- <button ion-button (click)="startRunning()">Lancer</button> -->
-  <button ion-button outline (click)="disconnect()">Déconnecter</button>
-  <button ion-button (click)="run()">Run</button>
-
-  <ion-list padding>
-  <ion-list-header>
-    Appareils disponibles
-  </ion-list-header>
-  <ion-item *ngFor='let device of unpairedDevices'>
-    <span (click)="selectDevice(device.address)">
+    <ion-item-group>
+      <ion-item-divider color="light"><h2><strong>Associated robots</strong></h2></ion-item-divider>
+    <!-- <button ion-item *ngFor="let device of pairedDevicesTable" (click)="itemTapped($event, device)"> -->
+    <button ion-item *ngFor="let device of pairedDevicesTable">
       {{device.name}}
-    </span>
-  </ion-item>
-  <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>
+      <!-- <span><ion-badge float-right item-end>{{device.connected}}</ion-badge></span> -->
+    </button>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider color="light"><h2><strong>Devices available</strong></h2></ion-item-divider>
+    <ion-item *ngFor='let device of unpairedDevices'>
+      <span (click)="selectDevice(device.address)">
+        {{device.name}}
+      </span>
+    </ion-item>
+    <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>
+  </ion-item-group>
   </ion-list>
 
 </ion-content>

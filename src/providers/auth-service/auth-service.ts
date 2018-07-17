@@ -41,7 +41,7 @@ export class AuthServiceProvider {
         let creds = {'email': user.email, 'password': user.password};
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-         this.http.post('http://localhost:3000/login', creds, {headers: headers}).subscribe(data => {
+         this.http.post('https://chicken-api.herokuapp.com/login', creds, {headers: headers}).subscribe(data => {
            this.userDetails = data;
              if(this.userDetails.success == true) {
                this.storeUserData(this.userDetails.token);

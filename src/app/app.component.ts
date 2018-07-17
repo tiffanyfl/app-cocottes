@@ -25,8 +25,8 @@ export class MyApp {
     });
 
     this.pages = [
-      { title: 'Accueil', component: HomePage },
-      { title: 'Marionnette', component: MarionnettePage },
+      { title: 'Home', component: HomePage },
+      { title: 'Robots', component: MarionnettePage },
       { title: 'Run', component: RunPage }
     ];
 
