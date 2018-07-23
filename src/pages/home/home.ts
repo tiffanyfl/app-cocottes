@@ -59,7 +59,7 @@ export class HomePage {
         this.connected.push({connectid : "not connected"});
         connected = this.connected[i].connectid;
 
-        if(name.substring(0,14) == "little_chicken" || name.substring(0,11) == "Big_Chicken" || name.substring(0,10) == "BigChicken" ){
+        if(name.substring(0,14) == "little_chicken" || name.substring(0,11) == "Big_Chicken" || name.substring(0,10) == "BigChicken" || name.substring(0,4) == "HC06" || name.substring(0,11) == "HC-06" ){
 
           this.pairedDevicesTable.push({
             name: name,
@@ -126,7 +126,7 @@ export class HomePage {
             }
             connected = this.connected[i].connectid;
 
-            if(name.substring(0,14) == "little_chicken" || name.substring(0,11) == "Big_Chicken" || name.substring(0,10) == "BigChicken" ){
+            if(name.substring(0,14) == "little_chicken" || name.substring(0,11) == "Big_Chicken" || name.substring(0,10) == "BigChicken" || name.substring(0,4) == "HC06" || name.substring(0,11) == "HC-06" ){
               this.pairedDevicesTable.push({
                 name: name,
                 class: classe,
